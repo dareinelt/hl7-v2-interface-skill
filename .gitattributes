@@ -1,0 +1,8 @@
+# HL7 and GDT files are byte-sensitive: CR segment separators and latin-1
+# content must survive checkout. Never let git normalize them.
+*.hl7 -text
+*.gdt -text
+*.md text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.json text eol=lf

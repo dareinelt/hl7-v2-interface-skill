@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Local patient data must never be committed
+*.local.hl7
+inbox/
+outbox/
+quarantine/
+dlq/

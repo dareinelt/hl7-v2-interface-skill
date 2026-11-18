@@ -1,0 +1,52 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Compile
+        run: python -m py_compile scripts/hl7core.py scripts/hl7_tool.py scripts/hl7_fhir_map.py scripts/hl7_siu_mdm.py scripts/gdt_bridge.py
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate sample messages
+        run: |
+          for message in assets/adt_a01.hl7 assets/oru_r01.hl7 assets/orm_o01.hl7 assets/siu_s12.hl7 assets/mdm_t02.hl7; do
+            python scripts/hl7_tool.py validate "$message"
+          done
+
+      - name: Map every sample to FHIR
+        run: |
+          for message in assets/adt_a01.hl7 assets/oru_r01.hl7 assets/orm_o01.hl7 assets/siu_s12.hl7 assets/mdm_t02.hl7; do
+            python scripts/hl7_fhir_map.py hl7-to-fhir "$message" --out "/tmp/$(basename "$message").json"
+          done

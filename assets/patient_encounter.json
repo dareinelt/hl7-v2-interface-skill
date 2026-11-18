@@ -1,0 +1,78 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:2f1c1a6e-0d3d-5a4e-9c2b-6f5c1f2d7a10",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-1",
+        "identifier": [
+          {
+            "system": "urn:oid:1.2.3.4",
+            "value": "123456",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR"
+                }
+              ]
+            }
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "DOE",
+            "given": ["JANE"]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1982-04-11",
+        "address": [
+          {
+            "line": ["12 MAIN ST"],
+            "city": "SPRINGFIELD",
+            "state": "IL",
+            "postalCode": "62704",
+            "country": "USA"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+1-217-555-0142",
+            "use": "home"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9b8f0f52-6e57-5a0e-8e37-1a2c3d4e5f60",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "enc-1",
+        "status": "in-progress",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "IMP",
+          "display": "inpatient encounter"
+        },
+        "subject": {
+          "reference": "urn:uuid:2f1c1a6e-0d3d-5a4e-9c2b-6f5c1f2d7a10"
+        },
+        "period": {
+          "start": "2026-03-14T15:20:00"
+        },
+        "location": [
+          {
+            "location": {
+              "display": "HOSP / 2W / 201 / A"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
